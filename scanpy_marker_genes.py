@@ -50,18 +50,10 @@ def main():
     except Exception as e:
 
         plt.figure()
-        plt.text(0.01, 0.3, "Incompatible group vector due to insufficent cells. Please retry the step with a different group vector", size='large')
+        plt.text(0.01, 0.5, 'Incompatible group vector due to insufficent cells')
+        plt.text(0.01, 0.3, 'Please retry the step with a different group vector')
         plt.axis('off')
-        gn.add_current_figure_to_results('One-vs-rest marker genes', dpi=75, height=figheight)
-
-        """gn._pickle(adata, 'adata')
-
-        rg_res = adata.uns['rank_genes_groups']
-
-        for group in rg_res['names'].dtype.names:
-            genes_names = [str(x[group]) for x in rg_res['names']]
-            scores = [float(x[group]) for x in rg_res['scores']]
-            gn.export(dict(zip(genes_names, scores)), 'Marker score ({} vs. rest)'.format(group), kind='geneMeta')"""
+        gn.add_current_figure_to_results('One-vs-rest marker genes')
 
         gn.commit()
 
