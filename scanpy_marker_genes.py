@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import scanpy as sc
-
+import time
 import numpy as np
 import pandas as pd
 import math
@@ -11,6 +11,9 @@ from granatum_sdk import Granatum
 
 
 def main():
+
+    tic = time.perf_counter()
+
     gn = Granatum()
 
     assay = gn.get_import('assay')
@@ -41,10 +44,17 @@ def main():
             genes_names = [str(x[group]) for x in rg_res['names']]
             scores = [float(x[group]) for x in rg_res['scores']]
             gn.export(dict(zip(genes_names, scores)), 'Marker score ({} vs. rest)'.format(group), kind='geneMeta')
+            gn.export(dict(zip(genes_names, scores)), 'Marker score ({} vs. rest).csv'.format(group), kind='raw', meta=None, raw=True)
 
         # cluster_assignment = dict(zip(adata.obs_names, adata.obs['louvain'].values.tolist()))
         # gn.export_statically(cluster_assignment, 'cluster_assignment')
 
+        toc = time.perf_counter()
+        time_passed = round(toc - tic, 2)
+
+        timing = "* Finished marker gene identification step in {} seconds*".format(time_passed)
+        gn.add_result(timing, "markdown")
+        
         gn.commit()
 
     except Exception as e:
