@@ -6,7 +6,6 @@ import numpy as np
 import pandas as pd
 import math
 import matplotlib.pyplot as plt
-import json
 
 from granatum_sdk import Granatum
 
@@ -46,7 +45,7 @@ def main():
             scores = [float(x[group]) for x in rg_res['scores']]
             newdict = dict(zip(genes_names, scores))
             gn.export(newdict, 'Marker score ({} vs. rest)'.format(group), kind='geneMeta')
-            gn.export(json.dumps(newdict), 'Marker score {} vs rest.csv'.format(group), kind='raw', meta=None, raw=True)
+            gn.export(pd.DataFrame(newdict).to_csv(), 'Marker score {} vs rest.csv'.format(group), kind='raw', meta=None, raw=True)
 
         # cluster_assignment = dict(zip(adata.obs_names, adata.obs['louvain'].values.tolist()))
         # gn.export_statically(cluster_assignment, 'cluster_assignment')
