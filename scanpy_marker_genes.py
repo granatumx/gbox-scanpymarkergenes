@@ -65,6 +65,7 @@ def main():
         plt.text(0.01, 0.3, 'Please retry the step with a different group vector')
         plt.axis('off')
         gn.add_current_figure_to_results('One-vs-rest marker genes')
+        gn.add_result('Error = {}'.format(e), "markdown")
 
         gn.commit()
 
