@@ -43,8 +43,9 @@ def main():
         for group in rg_res['names'].dtype.names:
             genes_names = [str(x[group]) for x in rg_res['names']]
             scores = [float(x[group]) for x in rg_res['scores']]
-            gn.export(dict(zip(genes_names, scores)), 'Marker score ({} vs. rest)'.format(group), kind='geneMeta')
-            gn.export(dict(zip(genes_names, scores)), 'Marker score ({} vs. rest).csv'.format(group), kind='raw', meta=None, raw=True)
+            newdict = dict(zip(genes_names, scores))
+            gn.export(newdict, 'Marker score ({} vs. rest)'.format(group), kind='geneMeta')
+            gn.export(newdict, 'Marker score ({} vs rest).csv'.format(group), kind='raw', meta=None, raw=True)
 
         # cluster_assignment = dict(zip(adata.obs_names, adata.obs['louvain'].values.tolist()))
         # gn.export_statically(cluster_assignment, 'cluster_assignment')
