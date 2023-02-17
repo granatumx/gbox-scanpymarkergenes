@@ -23,7 +23,7 @@ def main():
     num_groups = len(group_vec.categories)
     figheight = 400 * (math.floor((num_groups - 1) / 7) + 1)
     print(assay.head(), flush=True)
-    print(group_vec.head(), flush=True)
+    print(group_vec, flush=True)
     print(len(sample_ids), flush=True)
     print(len(group_dict), flush=True)
     print(num_groups, flush=True)
