@@ -22,9 +22,9 @@ def main():
     group_vec = pd.Categorical([group_dict.get(x) for x in sample_ids])
     num_groups = len(group_vec.categories)
     figheight = 400 * (math.floor((num_groups - 1) / 7) + 1)
-    print(len(assay.index), flush=True)
     print(len(sample_ids), flush=True)
     print(len(group_dict), flush=True)
+    print(num_groups, flush=True)
 
     adata = sc.AnnData(np.array(assay.get('matrix')).T)
     adata.var_names = assay.get('geneIds')
