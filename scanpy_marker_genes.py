@@ -33,7 +33,7 @@ def main():
 
     print(len(adata.var_names), flush=True)
 
-    sc.pp.neighbors(adata, n_neighbors=min(len(adata.var_names), 22)-2, use_rep='X', method='gauss')
+    sc.pp.neighbors(adata, n_neighbors=min(len(adata.var_names)/2.0, 22), use_rep='X', method='gauss')
     
     try:
 
