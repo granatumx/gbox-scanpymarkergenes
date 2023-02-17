@@ -16,24 +16,26 @@ def main():
 
     gn = Granatum()
 
-    assay = gn.get_import('assay')
-    sample_ids = assay.get('sampleIds')
+    assay = gn.pandas_from_assay(gn.get_import("assay")).T
+    sample_ids = assay.index
     group_dict = gn.get_import('groupVec')
     group_vec = pd.Categorical([group_dict.get(x) for x in sample_ids])
     num_groups = len(group_vec.categories)
     figheight = 400 * (math.floor((num_groups - 1) / 7) + 1)
+    print(assay.head(), flush=True)
+    print(group_vec.head(), flush=True)
     print(len(sample_ids), flush=True)
     print(len(group_dict), flush=True)
     print(num_groups, flush=True)
 
-    adata = sc.AnnData(np.array(assay.get('matrix')).T)
-    adata.var_names = assay.get('geneIds')
-    adata.obs_names = assay.get('sampleIds')
+    adata = sc.AnnData(assay)
+    #adata.var_names = assay.get('geneIds')
+    #adata.obs_names = assay.get('sampleIds')
     adata.obs['groupVec'] = group_vec
 
     print(len(adata.var_names), flush=True)
 
-    sc.pp.neighbors(adata, n_neighbors=int(min(len(adata.var_names)/2, 22)), method='gauss')
+    sc.pp.neighbors(adata, n_neighbors=int(min(len(adata.var_names)/2, 22))) #, method='gauss')
     
     try:
 
