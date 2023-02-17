@@ -31,6 +31,8 @@ def main():
     adata.obs_names = assay.get('sampleIds')
     adata.obs['groupVec'] = group_vec
 
+    print(len(adata.var_names), flush=True)
+
     sc.pp.neighbors(adata, n_neighbors=min(len(adata.var_names), 22)-2, use_rep='X', method='gauss')
     
     try:
